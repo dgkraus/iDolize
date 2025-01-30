@@ -1,0 +1,125 @@
+{% extends "landing_page/base.html" %}
+
+{% load static %}
+
+{% block title %}DK Portfolio{% endblock %}
+
+{% block content %}
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+
+            <!-- Logo -->
+            <a href="" class="logo">
+                <span class="symbol"><img src="{% static 'landing_page/images/logo.svg' %}" alt="" /></span><span class="title">DK Portfolio</span>
+            </a>
+
+            <!-- Nav -->
+            <nav>
+                <ul>
+                    <li><a href="#menu">Menu</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="generic.html">Ipsum veroeros</a></li>
+            <li><a href="generic.html">Tempus etiam</a></li>
+            <li><a href="generic.html">Consequat dolor</a></li>
+            <li><a href="elements.html">Elements</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+            <header>
+                <h1>よーきんしゃったね!<br/>
+                Welcome to my portfolio website</a>.</h1>
+                <p>Here I want to showcase projects created by me and tell you more about myself and my experience.</p>
+            </header>
+            <section class="tiles">
+                <article class="style1">
+                    <span class="image">
+                        <img src="{% static 'landing_page/images/CV_placeholder.jpg' %}" alt="CV will go here" />
+                    </span>
+                    <a href="#">
+                        <h2>CV goes here</h2>
+                        <div class="content">
+                            <p>Coming soon...</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style2">
+                    <span class="image">
+                        <img src="{% static 'landing_page/images/gobzer.jpg' %}" alt="" />
+                    </span>
+                    <a href="https://github.com/dgkraus/gobzer">
+                        <h2>Gobzer</h2>
+                        <div class="content">
+                            <p>A fully automated WoW Auction House bot using OpenCV2 and Pyautogui.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style2">
+                    <span class="image">
+                        <img src="{% static 'landing_page/images/iDolize.jpg' %}" alt="" />
+                    </span>
+                    <a href="{% url 'idolize:idol_search' %}">
+                        <h2>idolize</h2>
+                        <div class="content">
+                            <p>An idol database and lookup tool.</p>
+                        </div>
+                    </a>
+                </article>
+                <!-- Additional articles go here -->
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <section>
+                <h2>Get in touch</h2>
+                <form method="post" action="#">
+                    <div class="fields">
+                        <div class="field half">
+                            <input type="text" name="name" id="name" placeholder="Name" />
+                        </div>
+                        <div class="field half">
+                            <input type="email" name="email" id="email" placeholder="Email" />
+                        </div>
+                        <div class="field">
+                            <textarea name="message" id="message" placeholder="Message"></textarea>
+                        </div>
+                    </div>
+                    <ul class="actions">
+                        <li><input type="submit" value="Send" class="primary" /></li>
+                    </ul>
+                </form>
+            </section>
+            <section>
+                <h2>Find me here</h2>
+                <ul class="icons">
+                    <li><a href="https://www.linkedin.com/in/dennisgk/" class="icon brands style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="https://github.com/dgkraus/" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+                </ul>
+            </section>
+            <ul class="copyright">
+                <li>&copy; No rights reserved whatsoever</li><li>Frontend template kindly provided by: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+{% endblock %}

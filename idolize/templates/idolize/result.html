@@ -1,0 +1,105 @@
+{% extends "landing_page/base.html" %}
+
+{% load static profile_tags %}
+
+{% block title %}iDolize{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idol Search Results</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .headline {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .idols {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .idol-card {
+            display: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            text-align: center;
+        }
+
+        .idol-card img {
+            width: 170px; 
+            border-radius: 70%; 
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+
+        .idol-card h3 {
+            font-size: 18px;
+            margin: 0;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .idol-card .idol-text {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="headline">
+        {% if fake_result %}
+            You are too unique and no idol matches you. But don't worry, Karen is there for you!
+        {% else %}
+            Congratulations, we found your new favorite idol!
+        {% endif %}
+    </div>
+
+    <div class="idols">
+        {% for idol in matching_idols %}
+            <div class="idol-card">
+                <div class="idol-text">
+                    <strong>Idol Name:</strong> {{ idol.idol_name }} <br>
+                    <strong>Zodiac:</strong> {{ idol.zodiac }} <br>
+                    <strong>Height:</strong> {{ idol.height }} <br>
+                    <strong>Birthplace:</strong> {{ idol.birthplace }}
+                    <br>
+                    <br>
+                </div>
+                <img src="{% static 'idolize/images/' %}{{ idol.idol_name|underscore_slugify }}_profile_pic.jpg" alt="{{ idol.idol_name }}">
+                <h3>{{ idol.idol_name }}</h3>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
+{% endblock %}

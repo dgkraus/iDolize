@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    
+    <!-- Link to FontAwesome CSS -->
+    <link rel="stylesheet" href="{% static 'landing_page/assets/css/fontawesome-all.min.css' %}">
+
+    <!-- Link to Main CSS -->
+    <link rel="stylesheet" href="{% static 'landing_page/assets/css/main.css' %}">
+
+    <!-- Link to Noscript CSS (optional, for users with JS disabled) -->
+    <noscript>
+        <link rel="stylesheet" href="{% static 'landing_page/assets/css/noscript.css' %}">
+    </noscript>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <!-- Your header content here -->
+    </header>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <!-- Your footer content here -->
+    </footer>
+
+    <!-- Optionally, include JS files -->
+</body>
+</html>
