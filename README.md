@@ -16,7 +16,8 @@ The idol data is sourced using my own scraper, **[iDolscraper](https://github.co
 - **Pytest / Playwright** (for testing)
 
 ### **What's Next?**
-- Docker integration is coming soon.
+- Docker integration is coming soon
+- API implementation via Django REST Framework
 - Further testing
 
 Stay tuned for updates!
