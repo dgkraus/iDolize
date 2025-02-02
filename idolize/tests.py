@@ -5,7 +5,7 @@ import requests
 import re
 
 from idolize.models import IdolDatabase
-from idolize.views import idol_search
+from idolize.views import IdolSearch
 
 class TestCalls(TestCase):
     def set_up_db_entries(self, create_extra=0):
@@ -41,9 +41,9 @@ class TestCalls(TestCase):
 
         c = Client(SERVER_NAME="localhost")
         post_data = {
-            "your_zodiac": "Unknown",
-            "your_height": "0",
-            "your_birthplace": "Moon"
+            "zodiac": "Unknown",
+            "height": "0",
+            "birthplace": "Moon"
         }
         response = c.post("/idolize/", post_data)
 
@@ -57,9 +57,9 @@ class TestCalls(TestCase):
 
         c = Client(SERVER_NAME="localhost")
         post_data = {
-            "your_zodiac": "Testiest",
-            "your_height": "300", #even if some parameters match multiple db entries, these should not show in the results if there is a closer match
-            "your_birthplace": "Pythonland"
+            "zodiac": "Testiest",
+            "height": "300", #even if some parameters match multiple db entries, these should not show in the results if there is a closer match
+            "birthplace": "Pythonland"
         }
         response = c.post("/idolize/", post_data)
         content = response.content.decode()
@@ -77,9 +77,9 @@ class TestCalls(TestCase):
 
         c = Client(SERVER_NAME="localhost")
         post_data = {
-            "your_zodiac": "Testiest",
-            "your_height": "300",
-            "your_birthplace": "Mars"
+            "zodiac": "Testiest",
+            "height": "300",
+            "birthplace": "Mars"
         }
         response = c.post("/idolize/", post_data)
         content = response.content.decode()
@@ -97,10 +97,11 @@ class TestCalls(TestCase):
 
         c = Client(SERVER_NAME="localhost")
         post_data = {
-            "your_zodiac": "",
-            "your_height": "",
-            "your_birthplace": ""
+            "zodiac": "",
+            "height": "",
+            "birthplace": ""
         }
         response = c.post("/idolize/", post_data)
+        print(response.content.decode())
 
-        self.assertIn("Karen is there for you!", response.content.decode(), "Expected 'Karen' in response but didn't get")
+        self.assertIn("This field is required", response.content.decode(), "Expected an error but didn't get it")

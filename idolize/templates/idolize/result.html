@@ -85,8 +85,9 @@
     <div class="idols">
         {% for idol in matching_idols %}
             <div class="idol-card">
+                <a href={{ idol.id }}>
                 <div class="idol-text">
-                    <strong>Idol Name:</strong> {{ idol.idol_name }} <br>
+                    <strong>Idol Name:</strong> {{ idol.idol_name }}
                     <strong>Zodiac:</strong> {{ idol.zodiac }} <br>
                     <strong>Height:</strong> {{ idol.height }} <br>
                     <strong>Birthplace:</strong> {{ idol.birthplace }}
@@ -96,6 +97,7 @@
                 <img src="{% static 'idolize/images/' %}{{ idol.idol_name|underscore_slugify }}_profile_pic.jpg" alt="{{ idol.idol_name }}">
                 <h3>{{ idol.idol_name }}</h3>
             </div>
+        </a>
         {% endfor %}
     </div>
 </div>

@@ -1,0 +1,104 @@
+{% extends "landing_page/base.html" %}
+{% load static profile_tags %}
+
+{% block title %}{{ idol.idol_name }}'s Profile - iDolize{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ idol.idol_name }}'s Profile</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .profile-picture {
+            flex: 1;
+            text-align: center;
+        }
+
+        .profile-picture img {
+            width: 280px; 
+            height: 400px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-details {
+            flex: 2;
+            padding-left: 30px;
+        }
+
+        .profile-details h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .profile-details p {
+            font-size: 18px;
+            color: #444;
+            margin: 5px 0;
+        }
+
+        .sns-links {
+            margin-top: 20px;
+        }
+
+        .sns-links a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 12px;
+            background-color: #0073e6;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .sns-links a:hover {
+            background-color: #005bb5;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <div class="profile-picture">
+        <img src="{% static 'idolize/images/' %}{{ idol.idol_name|underscore_slugify }}_profile_pic.jpg" alt="{{ idol.idol_name }}">
+    </div>
+
+    <div class="profile-details">
+        <h1>{{ idol.idol_name }}</h1>
+        <p><strong>Zodiac:</strong> {{ idol.zodiac }}</p>
+        <p><strong>Height:</strong> {{ idol.height }} cm</p>
+        <p><strong>Birthplace:</strong> {{ idol.birthplace }}</p>
+
+        <div class="sns-links">
+            {% for sns in sns_links %}
+                <p><strong>{{ sns.platform }}:</strong> <a href="{{ sns.link }}" target="_blank">{{ sns.link }}</a></p>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}

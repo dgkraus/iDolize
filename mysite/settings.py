@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
 INSTALLED_APPS = [
     'landing_page.apps.LandingPageConfig',
     'idolize.apps.IdolizeConfig',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

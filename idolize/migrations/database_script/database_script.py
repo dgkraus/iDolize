@@ -33,7 +33,16 @@ def populate_database():
         birthplace = dict.get("birthplace", "")
         zodiac = dict.get("zodiac", "")
         height = dict.get("height", "").replace(" cm","")
-        sns = dict.get("sns", "")
+        sns = dict.get("sns", [])
+
+        sns_dict = {}
+        for link in sns:
+            if "twitter" in link or "x.com" in link:
+                sns_dict["Twitter"] = link
+            elif "instagram" in link:
+                sns_dict["Instagram"] = link
+            elif "tiktok" in link:
+                sns_dict["TikTok"] = link
 
         idol = IdolDatabase(
                 idol_name = idol_name,
@@ -42,7 +51,7 @@ def populate_database():
                 birthplace = birthplace,
                 zodiac = zodiac,
                 height = height,
-                sns = sns,
+                sns = sns_dict,
     )
         idol_list.append(idol)
 

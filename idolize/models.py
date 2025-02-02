@@ -7,7 +7,7 @@ class IdolDatabase(models.Model):
     birthplace = models.CharField(max_length=50)
     zodiac = models.CharField(max_length=50)
     height = models.CharField(max_length=50)
-    sns = models.CharField(max_length=200)
+    sns = models.JSONField(default=list)
     
     def __str__(self):
         return self.idol_name

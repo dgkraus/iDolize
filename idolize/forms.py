@@ -1,6 +1,12 @@
-from django import forms
+from django.forms import ModelForm
+from idolize.models import IdolDatabase
 
-class IdolSearchForm(forms.Form):
-    your_zodiac = forms.CharField(label="Your zodiac", max_length=20)
-    your_height = forms.CharField(label="Your height (in CM)", max_length=20)
-    your_birthplace = forms.CharField(label="Your birthplace", max_length=20)
+class IdolSearchForm(ModelForm):
+    class Meta:
+        model = IdolDatabase
+        fields = ["zodiac", "height", "birthplace"]
+
+    def clean_height(self):
+        height = self.cleaned_data.get("height")
+        valid_height = height.replace("cm","").strip()
+        return valid_height
