@@ -18,6 +18,11 @@ def idol_search(request):
             height = cleaned_form.get("your_height").replace("cm","").strip()
             birthplace = cleaned_form.get("your_birthplace").strip()
         
+        else:
+            zodiac = "empty"
+            height = "empty"
+            birthplace = "empty"
+        
         fake_result = None
 
         best_match = IdolDatabase.objects.filter(
