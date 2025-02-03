@@ -1,12 +1,8 @@
-from django.shortcuts import render, get_list_or_404
-from django.views.generic import TemplateView, FormView, DetailView
-from django.forms import modelform_factory
+from django.shortcuts import render
+from django.views.generic import FormView, DetailView
 from django.core.exceptions import *
 from django.db.models import Q
-from django.http import JsonResponse, Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, generics, mixins
+from rest_framework import generics
 
 from .forms import IdolSearchForm
 from .models import IdolDatabase
@@ -17,42 +13,45 @@ class IdolSearch(FormView):
     form_class = IdolSearchForm
 
     def form_valid(self, form):
-        zodiac = form.cleaned_data.get("zodiac")
-        height = form.cleaned_data.get("height")
-        birthplace = form.cleaned_data.get("birthplace")
+        self.zodiac = form.cleaned_data.get("zodiac")
+        self.height = form.cleaned_data.get("height")
+        self.birthplace = form.cleaned_data.get("birthplace")
 
-        result = None
-        fake_result = None
+        matching_idols, fake_result = self.determine_match()
 
+        #handling of the True or False check of fake_result is handled in the result.html to make it easier to show different content based on the result
+        return render(self.request, "idolize/result.html", {
+            "matching_idols": matching_idols, 
+            "fake_result": fake_result
+        })
+
+    def determine_match(self):
         best_match = IdolDatabase.objects.filter(
-            Q(zodiac__iexact=zodiac) & 
-            Q(height__iexact=height) & 
-            Q(birthplace__icontains=birthplace)
+            Q(zodiac__iexact=self.zodiac) & 
+            Q(height__iexact=self.height) & 
+            Q(birthplace__icontains=self.birthplace)
         )
-
         if best_match.exists():
-            result = best_match
-        else:
-            medium_match = IdolDatabase.objects.filter(
-                (Q(zodiac__iexact=zodiac) & Q(height__iexact=height)) |
-                (Q(zodiac__iexact=zodiac) & Q(birthplace__icontains=birthplace)) |
-                (Q(height__iexact=height) & Q(birthplace__icontains=birthplace))
-            )
-            if medium_match.exists():
-                result = medium_match
-            else:
-                ok_match = IdolDatabase.objects.filter(
-                    Q(zodiac__iexact=zodiac) | 
-                    Q(height__iexact=height) | 
-                    Q(birthplace__icontains=birthplace)
-                )
-                result = ok_match
-
-        if not result.exists():
-            fake_result = True
-            result = [IdolDatabase.objects.get(idol_name="Matsumoto Karen")]
-
-        return render(self.request, "idolize/result.html", {"matching_idols": result, "fake_result": fake_result})
+            return best_match, False
+    
+        medium_match = IdolDatabase.objects.filter(
+            (Q(zodiac__iexact=self.zodiac) & Q(height__iexact=self.height)) |
+            (Q(zodiac__iexact=self.zodiac) & Q(birthplace__icontains=self.birthplace)) |
+            (Q(height__iexact=self.height) & Q(birthplace__icontains=self.birthplace))
+        )
+        if medium_match.exists():
+            return medium_match, False
+        
+        ok_match = IdolDatabase.objects.filter(
+            Q(zodiac__iexact=self.zodiac) | 
+            Q(height__iexact=self.height) | 
+            Q(birthplace__icontains=self.birthplace)
+        )
+        if ok_match.exists():
+            return ok_match,False
+                
+        #not showing any result in case there are no matching parameters is boring, so we always show a predetermined result as long as there is input
+        return [IdolDatabase.objects.get(idol_name="Matsumoto Karen")], True
     
 class IdolProfileView(DetailView):
 

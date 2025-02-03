@@ -35,6 +35,8 @@ def populate_database():
         height = dict.get("height", "").replace(" cm","")
         sns = dict.get("sns", [])
 
+        # I originally saved the SNS links in a Python list with my webscraper, which turned out to make it difficult to retrieve again once saved in the SQLite database;
+        # manually changing the formatting at this point saves some trouble later.
         sns_dict = {}
         for link in sns:
             if "twitter" in link or "x.com" in link:
