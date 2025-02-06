@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.views.generic import FormView, DetailView
 from django.core.exceptions import *
 from django.db.models import Q
-from rest_framework import generics
+from django.contrib.auth.decorators import login_required
+from rest_framework import generics 
 
 from .forms import IdolSearchForm
 from .models import IdolDatabase
@@ -58,7 +59,7 @@ class IdolProfileView(DetailView):
     template_name = "idolize/profileview.html"
     model = IdolDatabase
     context_object_name = "idol"
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["idol_name"] = self.object.idol_name

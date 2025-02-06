@@ -7,37 +7,38 @@ import re
 from idolize.models import IdolDatabase
 from idolize.views import IdolSearch
 
-class TestCalls(TestCase):
-    def set_up_db_entries(self, create_extra=0):
-        """
-        create test data for tests to use
-        """
-        IdolDatabase.objects.create(
-            idol_name = "Matsumoto Karen",
-            zodiac = "fake",
-            height = "fake",
-            birthplace = "fake"
-        )
-        IdolDatabase.objects.create(
-            idol_name = "Test Object",
-            zodiac = "Testiest",
-            height = "300",
-            birthplace = "Pythonland"
-        )
+def set_up_db_entries(create_extra=0):
+    """
+    create test data for tests to use
+    """
+    IdolDatabase.objects.create(
+        idol_name = "Matsumoto Karen",
+        zodiac = "fake",
+        height = "fake",
+        birthplace = "fake"
+    )
+    IdolDatabase.objects.create(
+        idol_name = "Test Object",
+        zodiac = "Testiest",
+        height = "300",
+        birthplace = "Pythonland"
+    )
 
-        if create_extra != 0:
-            for i in range(create_extra):
-                IdolDatabase.objects.create(
-                    idol_name = ("Idol_"+str(i)),
-                    zodiac = "fakies",
-                    height = "300",
-                    birthplace = "Mars"
-                )
+    if create_extra != 0:
+        for i in range(create_extra):
+            IdolDatabase.objects.create(
+                idol_name = ("Idol_"+str(i)),
+                zodiac = "fakies",
+                height = "300",
+                birthplace = "Mars"
+            )
+
+class TestCalls(TestCase):
     def test_no_match(self):
         """
         this test makes a search were 0 parameters match any db entries, which should trigger the fake_result variable in the view and show a special result
         """
-        self.set_up_db_entries()
+        set_up_db_entries()
 
         c = Client(SERVER_NAME="localhost")
         post_data = {
@@ -53,7 +54,7 @@ class TestCalls(TestCase):
         """
         given 3 parameters that fit exactly one db entry, this should always return one predictable result based on current db entries
         """
-        self.set_up_db_entries(create_extra=1)
+        set_up_db_entries(create_extra=1)
 
         c = Client(SERVER_NAME="localhost")
         post_data = {
@@ -72,8 +73,7 @@ class TestCalls(TestCase):
         """
         using parameters that give a high amount of results, all the results should still be sent in the response
         """
-
-        self.set_up_db_entries(create_extra=100)
+        set_up_db_entries(create_extra=100)
 
         c = Client(SERVER_NAME="localhost")
         post_data = {
@@ -93,7 +93,7 @@ class TestCalls(TestCase):
         """
         unusual or invalid search terms should either throw an error which may need to be handled by the view, or they should correctly fall back to the fake_result
         """
-        self.set_up_db_entries()
+        set_up_db_entries()
 
         c = Client(SERVER_NAME="localhost")
         post_data = {
@@ -102,6 +102,5 @@ class TestCalls(TestCase):
             "birthplace": ""
         }
         response = c.post("/idolize/", post_data)
-        print(response.content.decode())
 
         self.assertIn("This field is required", response.content.decode(), "Expected an error but didn't get it")
