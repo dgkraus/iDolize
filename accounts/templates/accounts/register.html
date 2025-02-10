@@ -1,0 +1,48 @@
+{% extends "landing_page/base.html" %}
+
+{% block title %}
+    Register new user
+{% endblock %}
+
+{% block content %}
+    <div class="register-container">
+        <h3>Register new user</h3>
+        <form action="{% url 'accounts:register' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+
+    <style>
+        /* Center the login container */
+        .register-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Style the form elements */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #8c95a0;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ffffff;
+        }
+    </style>
+{% endblock %}

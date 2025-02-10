@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
 
 INSTALLED_APPS = [
     'landing_page.apps.LandingPageConfig',
+    'accounts.apps.AccountsConfig',
     'idolize.apps.IdolizeConfig',
     'rest_framework',
     'django.contrib.admin',
@@ -84,6 +85,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

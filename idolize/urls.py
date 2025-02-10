@@ -11,5 +11,5 @@ urlpatterns = [
     path("", views.IdolSearch.as_view(), name="idol_search"),
     path("<int:pk>/", views.IdolProfileView.as_view(), name="idol-profile"),
     path("api/", views.IdolList.as_view(), name="idol-list"),
-    path('admin/', admin.site.urls),
+    path("api/<int:pk>/", views.IdolDetail.as_view(), name="idol-details"),
 ] + debug_toolbar_urls()

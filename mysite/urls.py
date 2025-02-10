@@ -17,12 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from landing_page.views import IndexView
-
 from debug_toolbar.toolbar import debug_toolbar_urls
 
 urlpatterns = [
     path("", include("landing_page.urls")),
     path("idolize/", include("idolize.urls")),
+    path("users/", include("accounts.urls")),
     path('admin/', admin.site.urls),
 ] + debug_toolbar_urls()

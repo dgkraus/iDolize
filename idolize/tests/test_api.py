@@ -1,12 +1,19 @@
 from django.test import TestCase
 
 import pytest
-from playwright.sync_api import sync_playwright, expect
+from playwright.sync_api import sync_playwright, expect, Playwright, APIRequestContext
 from asgiref.sync import sync_to_async
 
 from idolize.models import IdolDatabase
 from idolize.serializers import IdolSerializer
 from idolize.tests.test_database import set_up_db_entries
+
+def api_request_context(
+        playwright: Playwright
+):
+    request_context = playwright.request.new.context(base_url="http://127.0.0.1:8000/idolize/api/")
+    yield request_context
+    request_context.dispose()
 
 @pytest.fixture(params=["chromium", "firefox", "webkit"], scope="function")
 def page(request, URL=""):
@@ -39,7 +46,6 @@ class TestAPI():
         """
         after setting up the database, the serializer should return the correct number of API responses
         """
-
         db_entries = IdolDatabase.objects.all()
         serializer = IdolSerializer(db_entries, many=True)
         api_response = serializer.data
@@ -48,7 +54,7 @@ class TestAPI():
     @pytest.mark.django_db
     def test_api_is_visible(self, page):
         """
-        when navigating to the appropriate URL, the correctly formatted API information should be visible in the browser
+        when navigating to the appropriate URL, the correctly formatted API information should be sent to the browser
         """
 
         locator = page.locator("text=HTTP 200 OK")

@@ -1,0 +1,50 @@
+{% extends "landing_page/base.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+    <div class="login-container">
+        <h1>Login</h1>
+        <form action="{% url 'idolize:idol_search' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+
+    <style>
+        /* Center the login container */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Style the form elements */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #8c95a0;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ffffff;
+        }
+    </style>
+{% endblock %}

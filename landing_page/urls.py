@@ -9,5 +9,4 @@ app_name = "landing"
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
-    path('admin/', admin.site.urls),
 ] + debug_toolbar_urls()
